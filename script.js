@@ -1,19 +1,41 @@
-const form = document.querySelector('.capture-form');
-const email = document.querySelector('#email');
-const query = document.querySelector('#query');
-const button = document.querySelector('.search-bar button');
+const searchInput = document.getElementById('search-input');
+const form = document.getElementById('search-form');
+const body = document.getElementById('catalog-body');
+const count = document.getElementById('result-count');
+const filters = [...document.querySelectorAll('.filter')];
+const rows = [...body.querySelectorAll('tr')];
 
-button.addEventListener('click', () => {
-  query.value = 'Search catalog by era, manufacturer, or color code';
-  query.focus();
+let activeEra = 'all';
+
+function applyFilters() {
+  const query = searchInput.value.trim().toLowerCase();
+  let visible = 0;
+
+  rows.forEach((row) => {
+    const matchesEra = activeEra === 'all' || row.dataset.era === activeEra;
+    const searchable = `${row.dataset.search} ${row.innerText}`.toLowerCase();
+    const matchesQuery = !query || searchable.includes(query);
+    const show = matchesEra && matchesQuery;
+    row.classList.toggle('hidden', !show);
+    if (show) visible += 1;
+  });
+
+  count.textContent = `${visible} entr${visible === 1 ? 'y' : 'ies'} visible`;
+}
+
+filters.forEach((button) => {
+  button.addEventListener('click', () => {
+    filters.forEach((item) => item.classList.remove('active'));
+    button.classList.add('active');
+    activeEra = button.dataset.filter;
+    applyFilters();
+  });
 });
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-  const value = email.value.trim();
-  if (!value) {
-    email.focus();
-    return;
-  }
-  form.innerHTML = '<div class="capture-confirmation"><strong>Request queued.</strong><span>We will send early access details to ' + value + '.</span></div>';
+  applyFilters();
 });
+
+searchInput.addEventListener('input', applyFilters);
+applyFilters();
