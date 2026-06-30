@@ -1,18 +1,19 @@
-document.querySelectorAll('.filter-chip').forEach((chip) => {
-  chip.addEventListener('click', () => {
-    document.querySelectorAll('.filter-chip').forEach((el) => el.classList.remove('active'));
-    chip.classList.add('active');
-  });
+const form = document.querySelector('.capture-form');
+const email = document.querySelector('#email');
+const query = document.querySelector('#query');
+const button = document.querySelector('.search-bar button');
+
+button.addEventListener('click', () => {
+  query.value = 'Search catalog by era, manufacturer, or color code';
+  query.focus();
 });
 
-document.querySelector('.capture-form')?.addEventListener('submit', (event) => {
+form.addEventListener('submit', (event) => {
   event.preventDefault();
-  const button = event.currentTarget.querySelector('button');
-  const original = button.textContent;
-  button.textContent = 'Request received';
-  button.disabled = true;
-  setTimeout(() => {
-    button.textContent = original;
-    button.disabled = false;
-  }, 1800);
+  const value = email.value.trim();
+  if (!value) {
+    email.focus();
+    return;
+  }
+  form.innerHTML = '<div class="capture-confirmation"><strong>Request queued.</strong><span>We will send early access details to ' + value + '.</span></div>';
 });
