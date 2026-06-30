@@ -1,179 +1,187 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MaquetteAir — Paint reference catalog for model aircraft kits</title>
-  <meta name="description" content="Searchable paint reference catalog for model aircraft kits, with era, manufacturer, color equivalence, and livery previews." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <main class="page-shell">
-    <section class="hero catalog-frame" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p class="eyebrow mono">MaquetteAir / paint reference index</p>
-        <h1 id="hero-title">Find the right paint match for every aircraft build.</h1>
-        <p class="lede">Browse a searchable catalog of model aircraft finishes by era, manufacturer, equivalence, and real livery examples before you ever open a paint rack.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MaquetteAir — Paint references for model aircraft kits</title>
+    <meta
+      name="description"
+      content="Searchable paint reference catalog for model aircraft kits with era, manufacturer, color equivalence, and livery previews."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero" id="top">
+        <div class="eyebrow">MaquetteAir / catalog-directory</div>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1>Find the right paint, the first time.</h1>
+            <p class="lede">
+              A searchable reference catalog for model aircraft kits: filter by era,
+              kit maker, paint line, equivalent color, and real livery use.
+            </p>
+            <div class="hero-actions">
+              <a class="primary-cta" href="#catalog">Browse the catalog</a>
+              <a class="secondary-cta" href="#capture">Get early access</a>
+            </div>
+            <ul class="hero-points" aria-label="Key catalog features">
+              <li>Era-aware paint references</li>
+              <li>Manufacturer cross-matches</li>
+              <li>Sample aircraft liveries</li>
+            </ul>
+          </div>
 
-        <form class="search-bar" id="search-form" autocomplete="off">
-          <label class="sr-only" for="search-input">Search paint, kit, or livery</label>
-          <input id="search-input" name="search" type="search" placeholder="Search by kit, aircraft, paint code, or livery" />
-          <button type="submit">Search catalog</button>
+          <aside class="catalog-preview" id="catalog" aria-label="Catalog preview">
+            <div class="catalog-header">
+              <div>
+                <p class="catalog-label">Live preview</p>
+                <h2>Reference rows</h2>
+              </div>
+              <p class="catalog-count">128 entries indexed</p>
+            </div>
+
+            <div class="filters" aria-label="Search filters">
+              <label>
+                <span>Era</span>
+                <select>
+                  <option>All eras</option>
+                  <option>1939-1945</option>
+                  <option>1950s-1960s</option>
+                  <option>1970s-1980s</option>
+                </select>
+              </label>
+              <label>
+                <span>Manufacturer</span>
+                <select>
+                  <option>All manufacturers</option>
+                  <option>Tamiya</option>
+                  <option>Hasegawa</option>
+                  <option>Airfix</option>
+                </select>
+              </label>
+              <label>
+                <span>Color equivalence</span>
+                <select>
+                  <option>Any paint line</option>
+                  <option>FS</option>
+                  <option>RLM</option>
+                  <option>RAF</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="table-wrap" role="table" aria-label="Sample catalog rows">
+              <div class="table-head" role="row">
+                <span>Kit / livery</span>
+                <span>Era</span>
+                <span>Primary paint</span>
+                <span>Equivalent</span>
+              </div>
+              <div class="table-row" role="row">
+                <span class="row-title">Supermarine Spitfire Mk.Vb — Malta scheme</span>
+                <span>1942</span>
+                <span>Extra Dark Sea Grey</span>
+                <span>RAF 23 / FS 36118</span>
+              </div>
+              <div class="table-row" role="row">
+                <span class="row-title">North American P-51D — natural metal finish</span>
+                <span>1944</span>
+                <span>Aluminum lacquer</span>
+                <span>Metalizer silver</span>
+              </div>
+              <div class="table-row" role="row">
+                <span class="row-title">McDonnell Douglas F-4E — SEA camouflage</span>
+                <span>1972</span>
+                <span>Dark Green</span>
+                <span>FS 34079</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="taxonomy" aria-labelledby="taxonomy-title">
+        <p class="section-kicker">Built for reference-first searching</p>
+        <h2 id="taxonomy-title">One catalog, four ways to narrow the paint rack.</h2>
+        <div class="taxonomy-grid">
+          <article>
+            <h3>Era</h3>
+            <p>Group kits and liveries by conflict, decade, and finish logic.</p>
+          </article>
+          <article>
+            <h3>Manufacturer</h3>
+            <p>Compare paint names across kit brands and instruction sheets.</p>
+          </article>
+          <article>
+            <h3>Color equivalence</h3>
+            <p>Cross-reference line-to-line equivalents without juggling tabs.</p>
+          </article>
+          <article>
+            <h3>Sample livery</h3>
+            <p>See how a color appears on real aircraft schemes before you mix.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="samples" aria-labelledby="samples-title">
+        <p class="section-kicker">Sample entries</p>
+        <h2 id="samples-title">Fast answers for the bench, not a wall of empty search.</h2>
+        <div class="sample-list">
+          <article>
+            <strong>RLM 74 Graugrün</strong>
+            <span>German late-war fighters</span>
+            <p>Equivalent matches pulled from the most common hobby paint lines.</p>
+          </article>
+          <article>
+            <strong>Sky Type S</strong>
+            <span>RAF early-war undersides</span>
+            <p>Useful when instructions name a shade, but your rack uses another brand.</p>
+          </article>
+          <article>
+            <strong>FS 36118 Gunship Gray</strong>
+            <span>USAF modern tactical schemes</span>
+            <p>Pair with filtered livery examples to confirm the finish in context.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="capture" id="capture">
+        <div>
+          <p class="section-kicker">Access</p>
+          <h2>Get notified when the searchable database opens.</h2>
+          <p>
+            MaquetteAir is being built as a reference index for model aircraft builders who
+            want quicker paint decisions and fewer dead-end conversions.
+          </p>
+        </div>
+        <form class="signup" action="#" method="post">
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" placeholder="you@example.com" />
+          </label>
+          <label>
+            <span>Primary interest</span>
+            <select name="interest">
+              <option>Paint equivalence search</option>
+              <option>Livery references</option>
+              <option>Manufacturer cross-matches</option>
+            </select>
+          </label>
+          <button type="submit">Request early access</button>
         </form>
+      </section>
 
-        <div class="filters" aria-label="Catalog filters">
-          <button class="filter active" type="button" data-filter="all">All eras</button>
-          <button class="filter" type="button" data-filter="wwii">WWII</button>
-          <button class="filter" type="button" data-filter="cold-war">Cold War</button>
-          <button class="filter" type="button" data-filter="modern">Modern</button>
-        </div>
-
-        <div class="hero-metrics">
-          <div><strong>1,200+</strong><span>paint references</span></div>
-          <div><strong>340+</strong><span>airframe liveries</span></div>
-          <div><strong>28</strong><span>manufacturer families</span></div>
-        </div>
-      </div>
-
-      <div class="preview-panel" aria-label="Catalog preview">
-        <div class="panel-topline">
-          <span class="mono">Live preview</span>
-          <span id="result-count">6 entries visible</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Kit / airframe</th>
-                <th>Era</th>
-                <th>Manufacturer</th>
-                <th>Equivalence</th>
-              </tr>
-            </thead>
-            <tbody id="catalog-body">
-              <tr data-era="wwii" data-search="spitfire ix raf dark green xtracrylix humbrol 30 desert scheme">
-                <td>
-                  <strong>Supermarine Spitfire Mk.IX</strong>
-                  <span>RAF desert and temperate schemes</span>
-                </td>
-                <td>WWII</td>
-                <td>Humbrol / Xtracrylix</td>
-                <td>Dark Green, Earth, Azure Blue</td>
-              </tr>
-              <tr data-era="wwii" data-search="p-51d mustang natural metal gunze mr color alclad silver">
-                <td>
-                  <strong>North American P-51D Mustang</strong>
-                  <span>USAAF natural metal finish</span>
-                </td>
-                <td>WWII</td>
-                <td>Mr. Color / Alclad</td>
-                <td>Aluminum, Stainless Steel, Black</td>
-              </tr>
-              <tr data-era="cold-war" data-search="f-104 starfighter luftwaffe revell tamiya grey green">
-                <td>
-                  <strong>Lockheed F-104G Starfighter</strong>
-                  <span>Luftwaffe grey-green operational finish</span>
-                </td>
-                <td>Cold War</td>
-                <td>Revell / Tamiya</td>
-                <td>Grey Green, Aluminium, NATO Black</td>
-              </tr>
-              <tr data-era="cold-war" data-search="phantom fgr.2 royal navy hu165 hu163 glossy sea grey">
-                <td>
-                  <strong>McDonnell Douglas F-4 Phantom FGR.2</strong>
-                  <span>Royal Navy and RAF fleet air arm</span>
-                </td>
-                <td>Cold War</td>
-                <td>Humbrol / Vallejo</td>
-                <td>Extra Dark Sea Grey, White, Light Aircraft Grey</td>
-              </tr>
-              <tr data-era="modern" data-search="f-16c viper aggressor fs 36375 mission models mmp">
-                <td>
-                  <strong>General Dynamics F-16C Viper</strong>
-                  <span>Modern low-visibility tactical schemes</span>
-                </td>
-                <td>Modern</td>
-                <td>Mission Models / MRP</td>
-                <td>FS 36375, FS 36118, Radome Tan</td>
-              </tr>
-              <tr data-era="modern" data-search="rafale m navy blue grey ak interactive sx-14 marine national">
-                <td>
-                  <strong>Dassault Rafale M</strong>
-                  <span>Marine Nationale carrier air wing</span>
-                </td>
-                <td>Modern</td>
-                <td>AK Interactive / Gunze</td>
-                <td>Blue Grey, Gull Grey, Intake White</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section class="taxonomy-section">
-      <div class="section-heading">
-        <p class="eyebrow mono">Reference taxonomy</p>
-        <h2>Search the catalog the way modelers actually work.</h2>
-      </div>
-      <div class="taxonomy-grid">
-        <article>
-          <h3>Era first</h3>
-          <p>Jump straight into WWII, Cold War, or modern jet references so the paint set matches the build period.</p>
-        </article>
-        <article>
-          <h3>Manufacturer mapping</h3>
-          <p>Crosswalk paints across Humbrol, Tamiya, Vallejo, Mr. Color, Revell, AK Interactive, and more.</p>
-        </article>
-        <article>
-          <h3>Livery evidence</h3>
-          <p>Pair each finish with a real aircraft scheme, so you can compare tones against a specific subject.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="sample-section">
-      <div class="section-heading compact">
-        <p class="eyebrow mono">Sample entries</p>
-        <h2>Built like a reference shelf, not a marketing site.</h2>
-      </div>
-      <div class="sample-cards">
-        <article>
-          <span class="sample-tag">Equivalence</span>
-          <h3>RAF Dark Green</h3>
-          <p>For WWII fighters, with manufacturer matches grouped by lacquer, enamel, and acrylic families.</p>
-        </article>
-        <article>
-          <span class="sample-tag">Livery</span>
-          <h3>Desert Spitfire Mk.IX</h3>
-          <p>Preview the finish in context before you open the paint guide or start masking.</p>
-        </article>
-        <article>
-          <span class="sample-tag">Search</span>
-          <h3>Kit-centric lookup</h3>
-          <p>Search by aircraft name, kit number, paint code, or scheme notes from the same field.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="capture-section">
-      <div>
-        <p class="eyebrow mono">Access</p>
-        <h2>Get early access to the full searchable database.</h2>
-        <p>MaquetteAir is being shaped around fast lookup, reliable equivalence, and practical livery browsing for aircraft modelers who want to spend less time guessing and more time painting.</p>
-      </div>
-      <a class="cta-link" href="mailto:hello@maquetteair.com">Request access</a>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <span>MaquetteAir © 2026</span>
-    <span>Paint reference catalog for model aircraft kits</span>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
+      <footer class="footer">
+        <span>MaquetteAir © 2026</span>
+        <a href="#top">Back to top</a>
+      </footer>
+    </main>
+  </body>
 </html>
