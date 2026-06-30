@@ -1,30 +1,18 @@
-const chips = document.querySelectorAll('.chip');
-const search = document.getElementById('search');
-const rows = document.querySelectorAll('.catalog-row');
-
-function normalize(value) {
-  return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ');
-}
-
-function applyFilters() {
-  const query = normalize(search.value);
-  const active = [...chips].find((chip) => chip.classList.contains('active'))?.textContent || '';
-  const activeQuery = normalize(active);
-
-  rows.forEach((row) => {
-    const text = normalize(row.textContent);
-    const visible = text.includes(query) && (activeQuery ? text.includes(activeQuery) : true);
-    row.style.display = visible ? '' : 'none';
-  });
-}
-
-chips.forEach((chip) => {
+document.querySelectorAll('.filter-chip').forEach((chip) => {
   chip.addEventListener('click', () => {
-    chips.forEach((btn) => btn.classList.remove('active'));
+    document.querySelectorAll('.filter-chip').forEach((el) => el.classList.remove('active'));
     chip.classList.add('active');
-    applyFilters();
   });
 });
 
-search.addEventListener('input', applyFilters);
-applyFilters();
+document.querySelector('.capture-form')?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const button = event.currentTarget.querySelector('button');
+  const original = button.textContent;
+  button.textContent = 'Request received';
+  button.disabled = true;
+  setTimeout(() => {
+    button.textContent = original;
+    button.disabled = false;
+  }, 1800);
+});
