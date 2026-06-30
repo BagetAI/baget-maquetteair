@@ -1,79 +1,154 @@
 const catalog = [
-  { code: 'MAQ-001', era: 'WWII', manufacturer: 'Tamiya', subject: 'Supermarine Spitfire Mk.Vb', paint: 'Ocean Gray / Dark Green', equivalent: 'FS 36152 / RAF chip cross-check', livery: '1942 Eastern Front escort, RAF Day Fighter Scheme' },
-  { code: 'MAQ-002', era: 'WWII', manufacturer: 'Airfix', subject: 'Messerschmitt Bf 109G-6', paint: 'RLM 74 / 75 / 76', equivalent: 'Gunze H66 / H417 / H417 notes', livery: 'Late-war Luftwaffe intercept, Balkan theater' },
-  { code: 'MAQ-003', era: 'Cold War', manufacturer: 'Hasegawa', subject: 'McDonnell F-4E Phantom II', paint: 'SEA Tactical Scheme', equivalent: 'FS 34079 / 34102 / 30219', livery: 'USAF Southeast Asia, 1972 line jet' },
-  { code: 'MAQ-004', era: 'Cold War', manufacturer: 'Revell', subject: 'F-104G Starfighter', paint: 'Natural Metal + anti-glare olive', equivalent: 'Aluminum lacquer / Olive Drab panel', livery: 'Luftwaffe JaboG 31, late 1960s' },
-  { code: 'MAQ-005', era: 'Modern', manufacturer: 'Tamiya', subject: 'F-35A Lightning II', paint: 'Low-Visibility Gray', equivalent: 'FS 36170 / custom RAM note', livery: 'USAF production finish, operational test airframe' },
-  { code: 'MAQ-006', era: 'Modern', manufacturer: 'Revell', subject: 'Dassault Rafale C', paint: 'Blue-gray airframe blend', equivalent: 'FS 35237 family / marine note', livery: 'French Air and Space Force air-police scheme' }
+  {
+    name: 'Messerschmitt Bf 109 G-6',
+    era: 'World War II',
+    manufacturer: 'RLM archive',
+    paint: 'RLM 74 Graugrün',
+    equivalence: 'approx. RAF Ocean Grey',
+    livery: 'JG 27, Mediterranean theater',
+    swatch: '#7c8475',
+  },
+  {
+    name: 'Supermarine Spitfire Mk.Vb',
+    era: 'World War II',
+    manufacturer: 'British Spec',
+    paint: 'Dark Green',
+    equivalence: 'approx. FS 34079',
+    livery: 'RAF Day Fighter Scheme',
+    swatch: '#52614a',
+  },
+  {
+    name: 'North American F-86F Sabre',
+    era: 'Cold War',
+    manufacturer: 'USAF finish',
+    paint: 'Aluminum',
+    equivalence: 'metallic natural metal',
+    livery: 'Korean War air superiority',
+    swatch: '#c7c1b7',
+  },
+  {
+    name: 'Mitsubishi A6M5 Zero',
+    era: 'World War II',
+    manufacturer: 'IJN standard',
+    paint: 'Amber Gray',
+    equivalence: 'warm gray-green',
+    livery: 'Carrier-based Pacific scheme',
+    swatch: '#c4bcaa',
+  },
+  {
+    name: 'Focke-Wulf Fw 190 A-8',
+    era: 'World War II',
+    manufacturer: 'RLM archive',
+    paint: 'RLM 76 Lichtblau',
+    equivalence: 'approx. pale sky blue',
+    livery: 'Eastern Front intercept',
+    swatch: '#b8c2c6',
+  },
+  {
+    name: 'de Havilland Mosquito B Mk.IV',
+    era: 'World War II',
+    manufacturer: 'RAF reference',
+    paint: 'Medium Sea Grey',
+    equivalence: 'approx. FS 36270',
+    livery: 'Pathfinder Force',
+    swatch: '#8e9494',
+  },
 ];
 
-const liveryStrip = [
-  { title: 'RAF Day Fighter', detail: 'Spitfire Mk.Vb / 1942' , color: '#8a9380' },
-  { title: 'Luftwaffe Late War', detail: 'Bf 109G-6 / 1944' , color: '#9aa0a0' },
-  { title: 'SEA Tactical', detail: 'F-4E Phantom II / 1972' , color: '#816b4e' },
-  { title: 'Low-Visibility Gray', detail: 'F-35A / current' , color: '#d6d9dd' }
-];
+const sampleEntries = catalog.slice(0, 3);
+const state = { search: '', era: 'All', manufacturer: 'All' };
 
-const results = document.getElementById('results');
-const eraFilter = document.getElementById('eraFilter');
-const manufacturerFilter = document.getElementById('manufacturerFilter');
 const searchInput = document.getElementById('searchInput');
+const clearSearch = document.getElementById('clearSearch');
+const eraFilters = document.getElementById('eraFilters');
+const manufacturerFilters = document.getElementById('manufacturerFilters');
+const catalogPreview = document.getElementById('catalogPreview');
 const resultCount = document.getElementById('resultCount');
-const strip = document.getElementById('liveryStrip');
-const form = document.getElementById('signupForm');
-const status = document.getElementById('formStatus');
+const sampleStack = document.getElementById('sampleStack');
+const waitlistForm = document.getElementById('waitlistForm');
+const formNote = document.getElementById('formNote');
 
-function renderRows(items) {
-  results.innerHTML = items.map(item => `
-    <article class="row">
-      <div class="code">${item.code}</div>
+const eras = ['All', ...new Set(catalog.map((item) => item.era))];
+const manufacturers = ['All', ...new Set(catalog.map((item) => item.manufacturer))];
+
+function renderChips(container, items, key) {
+  container.innerHTML = items
+    .map(
+      (item) => `
+        <button class="chip${state[key] === item ? ' active' : ''}" type="button" data-filter="${key}" data-value="${item}">
+          ${item}
+        </button>`
+    )
+    .join('');
+}
+
+function matches(item) {
+  const haystack = [item.name, item.era, item.manufacturer, item.paint, item.equivalence, item.livery]
+    .join(' ')
+    .toLowerCase();
+  const term = state.search.toLowerCase();
+  return (
+    haystack.includes(term) &&
+    (state.era === 'All' || item.era === state.era) &&
+    (state.manufacturer === 'All' || item.manufacturer === state.manufacturer)
+  );
+}
+
+function rowMarkup(item, variant = 'catalog') {
+  return `
+    <article class="${variant === 'sample' ? 'sample-row' : 'catalog-row'}">
       <div>
-        <strong>${item.subject}</strong>
-        <div class="meta">${item.paint}</div>
+        <strong>${item.name}</strong>
+        <span class="tag">${item.era}</span>
       </div>
-      <div class="meta">
-        <strong>${item.equivalent}</strong><br />
-        Manufacturer: ${item.manufacturer}
+      <div>
+        <span class="tag">Manufacturer</span>
+        <p>${item.manufacturer}</p>
       </div>
-      <div class="badge">${item.era}</div>
-      <div class="meta" style="grid-column: 1 / -1; padding-top: 2px;">${item.livery}</div>
+      <div>
+        <span class="tag">Paint equivalence</span>
+        <p><span class="swatch" style="background:${item.swatch}"></span>${item.paint}</p>
+      </div>
+      <div>
+        <span class="tag">Sample livery</span>
+        <p>${item.livery}</p>
+      </div>
     </article>
-  `).join('');
-  resultCount.textContent = `${items.length} reference${items.length === 1 ? '' : 's'}`;
+  `;
 }
 
-function applyFilters() {
-  const era = eraFilter.value;
-  const manufacturer = manufacturerFilter.value;
-  const query = searchInput.value.trim().toLowerCase();
-
-  const filtered = catalog.filter(item => {
-    const text = `${item.code} ${item.subject} ${item.paint} ${item.equivalent} ${item.livery} ${item.manufacturer} ${item.era}`.toLowerCase();
-    return (era === 'all' || item.era === era) &&
-      (manufacturer === 'all' || item.manufacturer === manufacturer) &&
-      (!query || text.includes(query));
-  });
-
-  renderRows(filtered.length ? filtered : catalog.slice(0, 2));
+function render() {
+  const filtered = catalog.filter(matches);
+  catalogPreview.innerHTML = filtered.map((item) => rowMarkup(item)).join('') || '<div class="catalog-row"><div><strong>No entries match.</strong><p>Try a different paint line, era, or livery keyword.</p></div></div>';
+  sampleStack.innerHTML = sampleEntries.map((item) => rowMarkup(item, 'sample')).join('');
+  resultCount.textContent = `${filtered.length} entr${filtered.length === 1 ? 'y' : 'ies'}`;
+  renderChips(eraFilters, eras, 'era');
+  renderChips(manufacturerFilters, manufacturers, 'manufacturer');
 }
 
-function renderStrip() {
-  strip.innerHTML = liveryStrip.map(item => `
-    <div class="swatch" style="background: linear-gradient(180deg, ${item.color}, #ffffff 88%);">
-      <strong>${item.title}</strong>
-      <span>${item.detail}</span>
-    </div>
-  `).join('');
-}
-
-eraFilter.addEventListener('change', applyFilters);
-manufacturerFilter.addEventListener('change', applyFilters);
-searchInput.addEventListener('input', applyFilters);
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  status.textContent = `Request noted for ${document.getElementById('intentInput').value}. We will open the first catalog set around that search pattern.`;
-  form.reset();
+searchInput.addEventListener('input', (event) => {
+  state.search = event.target.value.trim();
+  render();
 });
 
-renderStrip();
-renderRows(catalog);
+clearSearch.addEventListener('click', () => {
+  state.search = '';
+  searchInput.value = '';
+  render();
+});
+
+document.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-filter]');
+  if (!button) return;
+  const { filter, value } = button.dataset;
+  state[filter] = value;
+  render();
+});
+
+waitlistForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  formNote.textContent = 'Request captured for the 2026 index backlog.';
+  waitlistForm.reset();
+});
+
+render();

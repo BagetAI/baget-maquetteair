@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="MaquetteAir is a searchable paint reference catalog for model aircraft kits, built for era, manufacturer, and color-equivalence lookups with sample liveries." />
     <title>MaquetteAir — Paint reference catalog for model aircraft kits</title>
+    <meta
+      name="description"
+      content="Search paint equivalence, era, manufacturer, and sample liveries for model aircraft kits in a calm reference catalog built for fast kit planning."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -12,119 +15,96 @@
   </head>
   <body>
     <main class="page-shell">
-      <section class="hero">
-        <div class="eyebrow-row">
-          <span class="eyebrow">MaquetteAir</span>
-          <span class="eyebrow-rule" aria-hidden="true"></span>
-          <span class="eyebrow">Catalog directory for model aircraft paint references</span>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="eyebrow">MaquetteAir reference catalog</div>
+        <h1 id="hero-title">Searchable paint references for model aircraft kits.</h1>
+        <p class="lede">
+          Find era-accurate colors, manufacturer matches, and sample liveries in one quiet catalog built for bench-side decisions.
+        </p>
+
+        <div class="search-bar" role="search" aria-label="Catalog search">
+          <label class="sr-only" for="searchInput">Search the catalog</label>
+          <input id="searchInput" type="search" placeholder="Search aircraft, paint, manufacturer, or livery" autocomplete="off" />
+          <button id="clearSearch" type="button">Clear</button>
         </div>
 
-        <div class="hero-copy">
-          <h1>Search the kit, match the paint, verify the livery.</h1>
+        <div class="filters" aria-label="Filter catalog">
+          <div class="filter-group">
+            <span>Era</span>
+            <div class="chips" id="eraFilters"></div>
+          </div>
+          <div class="filter-group">
+            <span>Manufacturer</span>
+            <div class="chips" id="manufacturerFilters"></div>
+          </div>
+        </div>
+
+        <div class="catalog-rail" aria-live="polite">
+          <div class="catalog-meta">
+            <span id="resultCount">0 entries</span>
+            <span>Visible rows update as you search.</span>
+          </div>
+          <div class="catalog-preview" id="catalogPreview"></div>
+        </div>
+      </section>
+
+      <section class="section" id="taxonomy">
+        <h2>Taxonomy built for kit planning.</h2>
+        <p>
+          The catalog is organized around the decisions modelers actually make: historical period, kit source, paint equivalence, and the marking scheme you want to finish.
+        </p>
+        <div class="taxonomy-grid">
+          <div>
+            <strong>Era</strong>
+            <p>Interwar, World War II, Cold War, modern.</p>
+          </div>
+          <div>
+            <strong>Manufacturer</strong>
+            <p>Reference by paint line, kit maker, or historical scheme source.</p>
+          </div>
+          <div>
+            <strong>Equivalence</strong>
+            <p>Quickly compare matched colors across major hobby paint ranges.</p>
+          </div>
+          <div>
+            <strong>Livery sample</strong>
+            <p>See representative aircraft finishes before you open the box.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-samples" id="samples">
+        <h2>Sample entries from the reference index.</h2>
+        <div class="sample-stack" id="sampleStack"></div>
+      </section>
+
+      <section class="section section-access" id="access">
+        <div class="access-card">
+          <p class="eyebrow">Capture interest</p>
+          <h2>Get early access to the searchable database.</h2>
           <p>
-            A calm reference catalog for model aircraft builders: filter by era,
-            manufacturer, paint equivalent, and aircraft livery without losing the
-            original source context.
+            We are organizing the first public catalog slice now. Join the waitlist to request specific manufacturers, paint systems, or livery families.
           </p>
-        </div>
-
-        <div class="catalog frame" id="catalog">
-          <div class="catalog-topbar">
-            <div>
-              <p class="section-label">Reference preview</p>
-              <p class="section-note">Visible rows load immediately so the catalog feels usable before any search.</p>
-            </div>
-            <div class="count-pill" id="resultCount">6 references</div>
-          </div>
-
-          <div class="filters" aria-label="Catalog filters">
+          <form class="waitlist" id="waitlistForm">
             <label>
-              <span>Era</span>
-              <select id="eraFilter">
-                <option value="all">All eras</option>
-                <option value="WWII">WWII</option>
-                <option value="Cold War">Cold War</option>
-                <option value="Modern">Modern</option>
-              </select>
+              Email
+              <input type="email" name="email" placeholder="you@example.com" required />
             </label>
             <label>
-              <span>Manufacturer</span>
-              <select id="manufacturerFilter">
-                <option value="all">All manufacturers</option>
-                <option value="Tamiya">Tamiya</option>
-                <option value="Hasegawa">Hasegawa</option>
-                <option value="Revell">Revell</option>
-                <option value="Airfix">Airfix</option>
-              </select>
+              What should we index next?
+              <input type="text" name="request" placeholder="e.g. RAF Bomber Command, Tamiya, late-war Luftwaffe" required />
             </label>
-            <label class="search-field">
-              <span>Paint or aircraft</span>
-              <input id="searchInput" type="search" placeholder="RLM 76, Olive Drab, Spitfire, Phantom..." />
-            </label>
-          </div>
-
-          <div class="taxonomy">
-            <div class="taxonomy-item"><span>Entry type</span><strong>Kit paint reference</strong></div>
-            <div class="taxonomy-item"><span>Coverage</span><strong>Era, equivalent, livery</strong></div>
-            <div class="taxonomy-item"><span>Use case</span><strong>Build planning and paint matching</strong></div>
-          </div>
-
-          <div class="rows" id="results" aria-live="polite"></div>
+            <button type="submit">Request access</button>
+          </form>
+          <p class="form-note" id="formNote">Focused on fast lookup, not a noisy forum.</p>
         </div>
       </section>
-
-      <section class="section-grid">
-        <article class="panel frame">
-          <p class="section-label">What it catalogs</p>
-          <ul class="spec-list">
-            <li>Paint names, equivalent codes, and source manufacturer notes</li>
-            <li>Aircraft examples tied to specific liveries and time periods</li>
-            <li>Search paths that start from the kit and end at a usable paint set</li>
-          </ul>
-        </article>
-
-        <article class="panel frame">
-          <p class="section-label">Why it matters</p>
-          <p class="panel-copy">
-            Model aircraft builders often have the kit, the subject, and the era — but not a clean
-            way to map those details to the right paint reference. MaquetteAir turns that lookup into a
-            single browsing habit.
-          </p>
-        </article>
-      </section>
-
-      <section class="sample-strip frame" aria-label="Sample livery strip">
-        <div class="sample-head">
-          <p class="section-label">Sample aircraft liveries</p>
-          <p class="section-note">A small preview of the visual reference layer that sits beside the searchable catalog.</p>
-        </div>
-        <div class="swatches" id="liveryStrip"></div>
-      </section>
-
-      <section class="capture frame">
-        <div>
-          <p class="section-label">Access</p>
-          <h2>Build the reference library before the shelf gets crowded.</h2>
-        </div>
-        <form class="capture-form" id="signupForm">
-          <label>
-            <span>Email for early access</span>
-            <input type="email" id="emailInput" placeholder="you@studio.com" required />
-          </label>
-          <label>
-            <span>What you want to search first</span>
-            <input type="text" id="intentInput" placeholder="WWII fighters, modern jets, color matches..." required />
-          </label>
-          <button type="submit">Request access</button>
-          <p class="form-status" id="formStatus">Early access requests help shape the first catalog batches for 2026.</p>
-        </form>
-      </section>
-
-      <footer class="footer">
-        <span>MaquetteAir</span>
-        <span>Catalog directory prototype, 2026</span>
-      </footer>
     </main>
+
+    <footer class="footer">
+      <span>MaquetteAir © 2026</span>
+      <span>Catalog-directory landing page</span>
+    </footer>
 
     <script src="script.js"></script>
   </body>
